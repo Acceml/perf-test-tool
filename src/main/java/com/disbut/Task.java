@@ -17,10 +17,16 @@
 package com.disbut;
 
 /**
- * Created by Acceml on 2016/3/22
+ * Created by Acceml on 2016/3/23
  * Email: huminghit@gmail.com
  */
 public class Task implements Runnable {
+
+    public final Thread thread;
+
+    public Task() {
+        thread = new Thread(this);
+    }
 
     @Override
     public void run() {

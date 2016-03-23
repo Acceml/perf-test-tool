@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.disbut;
-
-import java.io.IOException;
+package com.disbut.measure;
 
 /**
- * Created by Acceml on 2016/3/22
+ * Created by Acceml on 2016/3/23
  * Email: huminghit@gmail.com
  */
-public interface RecordWriter {
-    void write(long value) throws IOException;
+public abstract class Measure {
+
 }

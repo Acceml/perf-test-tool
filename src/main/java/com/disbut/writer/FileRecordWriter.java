@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package com.disbut;
+package com.disbut.writer;
+
+import com.disbut.RecordWriter;
 
 import java.io.IOException;
 
 /**
- * Created by Acceml on 2016/3/22
+ * Created by Acceml on 2016/3/23
  * Email: huminghit@gmail.com
  */
-public interface RecordWriter {
-    void write(long value) throws IOException;
+public class FileRecordWriter implements RecordWriter {
+    @Override
+    public void write(String metric) throws IOException {
+
+    }
 }

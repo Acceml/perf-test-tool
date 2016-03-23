@@ -16,8 +16,12 @@
 
 package com.disbut;
 
+import com.disbut.measure.Measurement;
+
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Acceml on 2016/3/22
@@ -31,6 +35,11 @@ public class Performance<T> {
 
     private final List<Task> tasks = new LinkedList<>();
 
+    private final CountDownLatch startTask = new CountDownLatch(1);
+
+    private long startTimeNs;
+
+
     public Performance(Measurement measurement, RecordWriter recordWriter) {
         this.measurement = measurement;
         this.recordWriter = recordWriter;
@@ -43,11 +52,29 @@ public class Performance<T> {
 
     public void go() {
         for (Task task : tasks) {
+            task.thread.start();
+        }
+        startTimeNs = System.currentTimeMillis();
+        measurement.setActivate();
+        //startTask--;then the task will start.
+        startTask.countDown();
+    }
 
+    public void waitAll() {
+        for (Task task : tasks) {
+            try {
+                task.thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException("failed to wait all tasks finished", e);
+            }
         }
     }
 
-    public void report() {
-
+    public void report() throws IOException {
+        long elapsedTime = System.nanoTime() - startTimeNs;
+        measurement.stop();
+        recordWriter.write(elapsedTime);
     }
+
 }
+

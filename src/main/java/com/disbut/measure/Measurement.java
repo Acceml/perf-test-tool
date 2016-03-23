@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-package com.disbut;
+package com.disbut.measure;
+
+import com.disbut.RecordWriter;
+import com.disbut.Recorder;
+
+import java.io.IOException;
 
 /**
  * Created by Acceml on 2016/3/22
  * Email: huminghit@gmail.com
  */
-public class Measurement {
+public class Measurement extends Measure implements Recorder {
+
+    private final String name;
 
     private volatile boolean activate = false;
+
+    public Measurement(String name) {
+        this.name = name;
+    }
 
     /**
      * start measure.
@@ -35,4 +46,12 @@ public class Measurement {
         activate = false;
     }
 
+    @Override
+    public void recordWrite(RecordWriter recordWriter) {
+        try {
+            recordWriter.write(name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

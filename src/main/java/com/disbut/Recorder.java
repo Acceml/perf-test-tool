@@ -21,8 +21,5 @@ package com.disbut;
  * Email: huminghit@gmail.com
  */
 public interface Recorder {
-    /**
-     * Records the specified {@code value}.
-     */
-    void recordValue(int value);
+    void recordWrite(RecordWriter recordWriter);
 }
